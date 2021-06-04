@@ -18,13 +18,13 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      #working-directory: ./test/CustomerClassLibrary.Test
+      working-directory: ./test/ZooLabApplication.Test
       run: dotnet restore
     - name: Build
-      #working-directory: ./test/CustomerClassLibrary.Test
+      working-directory: ./test/ZooLabApplication.Test
       run: dotnet build --no-restore
     - name: TestCodeCov
-      #working-directory: ./test/CustomerClassLibrary.Test
+      working-directory: ./test/ZooLabApplication.Test
       run: dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=TestResults/ 
     - uses: codecov/codecov-action@v1
       with:
