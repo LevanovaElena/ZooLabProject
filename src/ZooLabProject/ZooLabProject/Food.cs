@@ -1,6 +1,6 @@
 ﻿namespace ZooLabApplication
 {
-    public interface IEnployees
+    public class Food
     {
     }
 }

@@ -26,7 +26,7 @@ namespace ZooLabApplication
                 foreach (Animal animalItem in Animals)
                 {
                     fillSqureFeet += animalItem.RequiredSpaceSqFt;
-                    if (animalItem.isFriendlyWith(animal))
+                    if (animalItem.IsFriendlyWith(animal))
                     {
                         Animals.Add(animal);
                     }

@@ -6,27 +6,42 @@ using System.Threading.Tasks;
 
 namespace ZooLabApplication
 {
-    /*
-     * Animals must be tag in Zoo with Unique ID, int32
-Animal should have
-Required Space in sq feet
-FeedTime to track the last time the animal was fed
-FeedSchedule, the time when an animal should be fed
-Every time animal is fed we need to track time and who fed the animal
-     */
+
     public abstract class Animal
     {
         public abstract int RequiredSpaceSqFt { get; }
-        public abstract int FavoriteFood { get; }
+        public abstract string[] FavoriteFood { get; }
         public List<FeedTime> FeedTimes { get; } = new List<FeedTime>();//время последнего кормления животного.
         public List<int> FeedSchedule { get; } = new List<int>();//время, когда следует кормить животное
-        public bool IsSeek { get; } //найден?
+        public  bool Seek { get; private set; }  //болен или нет
         public int Id { get; } //Unique ID
 
-        internal bool isFriendlyWith(Animal animal)
+        public abstract bool IsFriendlyWith(Animal animal);
+
+
+        public Animal(int id)
         {
-            return true;
+            Id = id;
         }
+        public void Feed(Food food)
+        {
+
+        }
+
+        public bool IsSeek()
+        {
+            return Seek = Seek ? false : true;
+        }
+
+        public void AddFeedSchedule(List<int> hours)
+        {
+
+        }
+        public void Heal(Medicine medicine)
+        {
+
+        }
+
 
 
     }

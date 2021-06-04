@@ -9,7 +9,7 @@ namespace ZooLabApplication
     public class Zoo
     {
         public List<Enclosure> Enclosures { get; private set; } = new List<Enclosure>();
-        public List<IEnployees> Enployees { get; private set; } = new List<IEnployees>();
+        public List<IEmployees> Enployees { get; private set; } = new List<IEmployees>();
         public string Location { get; private set; }
 
         public Zoo(string location)
