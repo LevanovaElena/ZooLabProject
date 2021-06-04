@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooLabApplication.Foods;
+
 
 namespace ZooLabApplication
 {
@@ -30,7 +32,7 @@ namespace ZooLabApplication
 
         public bool IsSeek()
         {
-            return Seek = Seek ? false : true;
+            return Seek = Seek ? false : true;      
         }
 
         public void AddFeedSchedule(List<int> hours)
