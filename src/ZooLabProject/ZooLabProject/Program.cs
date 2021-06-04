@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZooLabProject
+namespace ZooLabApplication
 {
     class Program
     {
