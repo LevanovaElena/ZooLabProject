@@ -22,7 +22,7 @@ namespace ZooLabApplication
         public Animal(int id)
         {
             Id = id;
-        }
+                                                                  }
         public void Feed(Food food)
         {
 

@@ -29,7 +29,7 @@ namespace ZooLabApplication.Test
         public void ShouldFindAvailableEnclosure()
         {
             Zoo zoo = new Zoo("location");
-            Enclosure enclosure = zoo.FindAvailableEnclosure(new Lion());
+            Enclosure enclosure = zoo.FindAvailableEnclosure(new Lion(45));
         }
     }
 }

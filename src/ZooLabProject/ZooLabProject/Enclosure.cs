@@ -29,6 +29,7 @@ namespace ZooLabApplication
                     if (animalItem.IsFriendlyWith(animal))
                     {
                         Animals.Add(animal);
+                        break;
                     }
                     else
                     {

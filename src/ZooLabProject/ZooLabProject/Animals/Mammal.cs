@@ -1,19 +1,15 @@
-﻿namespace ZooLabApplication.Test
+﻿namespace ZooLabApplication
 {
-    public class Mammal : Animal
+    public abstract class Mammal : Animal
     {
         public override int RequiredSpaceSqFt { get; }
 
         public override string[] FavoriteFood { get; }
 
-        public override bool IsFriendlyWith(Animal animal)
+         public Mammal(int id) : base(id)
         {
-            return true;
+            RequiredSpaceSqFt = 1000;
         }
 
-        public Mammal(int id) : base(id)
-        {
-
-        }
     }
 }

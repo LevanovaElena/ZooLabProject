@@ -48,12 +48,14 @@ namespace ZooLabApplication.Test
             Assert.NotNull(animal.FeedTimes);
             Assert.NotNull(animal.FeedSchedule);
             Assert.False(animal.Seek);
+            Assert.Equal(12, animal.Id);
         }
         [Fact]
         public void ShouldCheckIsFriendlyAnimal()
         {
             Animal animal1 = new MockAnimal(12);
             Animal animal2 = new MockAnimal(13);
+
             MockAnimalNotFriend animalNotFriendly = new MockAnimalNotFriend(45);
 
             Assert.True( animal1.IsFriendlyWith(animal2));
@@ -66,5 +68,6 @@ namespace ZooLabApplication.Test
             Animal animal1 = new MockAnimal(12);
             Assert.True( animal1.IsSeek());
         }
+
     }
 }
