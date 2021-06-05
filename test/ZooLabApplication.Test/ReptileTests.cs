@@ -9,22 +9,22 @@ namespace ZooLabApplication.Test
         [Fact]
         public void ShoudBeCreateTurtle()
         {
-            Turtle parrot = new Turtle(1);
-            Assert.Equal(1, parrot.Id);
-            Assert.Equal(5, parrot.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
-            Assert.NotNull(parrot.FeedSchedule);
-            Assert.NotNull(parrot.FeedTimes);
+            Turtle turtle = new Turtle(1);
+            Assert.Equal(1, turtle.Id);
+            Assert.Equal(5, turtle.RequiredSpaceSqFt);
+            Assert.Equal(string.Join("", new string[] { "Grass", "Fruits", "Vegetable" }), string.Join("", turtle.FavoriteFood));
+            Assert.NotNull(turtle.FeedSchedule);
+            Assert.NotNull(turtle.FeedTimes);
         }
 
         [Fact]
         public void ShouldCheckIsFriendlyWithTurtle()
         {
-            Turtle parrot = new Turtle(1);
+            Turtle turtle = new Turtle(1);
 
-            Assert.False(parrot.IsFriendlyWith(new Lion(12)));
-            Assert.True(parrot.IsFriendlyWith(new Bison(13)));
-            Assert.True(parrot.IsFriendlyWith(new Turtle(13)));
+            Assert.False(turtle.IsFriendlyWith(new Lion(12)));
+            Assert.True(turtle.IsFriendlyWith(new Bison(13)));
+            Assert.True(turtle.IsFriendlyWith(new Turtle(13)));
         }
         [Fact]
         public void ShoudBeCreateSnake()
@@ -32,7 +32,7 @@ namespace ZooLabApplication.Test
             Snake bison = new Snake(1);
             Assert.Equal(1, bison.Id);
             Assert.Equal(2, bison.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
+            Assert.Equal(string.Join("", new string[] { "Meet" }), string.Join("", bison.FavoriteFood));
             Assert.NotNull(bison.FeedSchedule);
             Assert.NotNull(bison.FeedTimes);
         }

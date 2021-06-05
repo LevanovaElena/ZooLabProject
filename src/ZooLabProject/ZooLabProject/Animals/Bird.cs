@@ -8,11 +8,11 @@ namespace ZooLabApplication.Animals
 {
     public abstract class Bird : Animal
     {
-        public override string[] FavoriteFood { get; }
         public Bird(int id) : base(id)
         {
+            this.FeedSchedule.Add(9);
+            this.FeedSchedule.Add(17);
         }
-
 
     }
 }

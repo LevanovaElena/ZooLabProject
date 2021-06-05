@@ -24,5 +24,20 @@ namespace ZooLabApplication.Test
         {
             Meet meet = new Meet();
         }
+        [Fact]
+        public void ShouldBeCreateFish()
+        {
+            Fish fish = new Fish();
+        }
+        [Fact]
+        public void ShouldBeCreateSeeds()
+        {
+            Seeds seeds = new Seeds();
+        }
+        [Fact]
+        public void ShouldBeCreateFruits()
+        {
+            Fruits fruit = new Fruits();
+        }
     }
 }

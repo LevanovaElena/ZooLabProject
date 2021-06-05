@@ -4,6 +4,7 @@ namespace ZooLabApplication
 {
     public class Elephant : Mammal
     {
+        public override string[] FavoriteFood { get; } = { "Grass", "Fruits", "Vegetable" };
         public Elephant(int id) : base(id)
         {
         }

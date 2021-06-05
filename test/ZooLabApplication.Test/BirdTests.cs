@@ -12,7 +12,7 @@ namespace ZooLabApplication.Test
             Parrot parrot = new Parrot(1);
             Assert.Equal(1, parrot.Id);
             Assert.Equal(5, parrot.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
+            Assert.Equal(string.Join("", new string[] { "Fruits", "Seeds" }), string.Join("", parrot.FavoriteFood));
             Assert.NotNull(parrot.FeedSchedule);
             Assert.NotNull(parrot.FeedTimes);
         }
@@ -29,12 +29,12 @@ namespace ZooLabApplication.Test
         [Fact]
         public void ShoudBeCreatePenguin()
         {
-            Penguin bison = new Penguin(1);
-            Assert.Equal(1, bison.Id);
-            Assert.Equal(10, bison.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
-            Assert.NotNull(bison.FeedSchedule);
-            Assert.NotNull(bison.FeedTimes);
+            Penguin penguin = new Penguin(1);
+            Assert.Equal(1, penguin.Id);
+            Assert.Equal(10, penguin.RequiredSpaceSqFt);
+            Assert.Equal(string.Join("", new string[] { "Fish" }), string.Join("", penguin.FavoriteFood));
+            Assert.NotNull(penguin.FeedSchedule);
+            Assert.NotNull(penguin.FeedTimes);
         }
 
         [Fact]

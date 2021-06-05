@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections;
+
 using Xunit;
 
 namespace ZooLabApplication.Test
@@ -15,7 +13,7 @@ namespace ZooLabApplication.Test
             Lion lion = new Lion(1);
             Assert.Equal(1, lion.Id);
             Assert.Equal(1000, lion.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
+            Assert.Equal(string.Join("",new string[] { "Meet"}),string.Join("",lion.FavoriteFood) );
             Assert.NotNull(lion.FeedSchedule);
             Assert.NotNull(lion.FeedTimes);
         }
@@ -34,7 +32,7 @@ namespace ZooLabApplication.Test
             Bison bison = new Bison(1);
             Assert.Equal(1, bison.Id);
             Assert.Equal(1000, bison.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
+            Assert.Equal(string.Join("", new string[] {  "Grass"  }), string.Join("", bison.FavoriteFood));
             Assert.NotNull(bison.FeedSchedule);
             Assert.NotNull(bison.FeedTimes);
         }
@@ -55,7 +53,7 @@ namespace ZooLabApplication.Test
             Elephant elephant = new Elephant(1);
             Assert.Equal(1, elephant.Id);
             Assert.Equal(1000, elephant.RequiredSpaceSqFt);
-            //Assert.NotNull(lion.FavoriteFood);
+            Assert.Equal(string.Join("", new string[] { "Grass", "Fruits", "Vegetable"  }), string.Join("", elephant.FavoriteFood));
             Assert.NotNull(elephant.FeedSchedule);
             Assert.NotNull(elephant.FeedTimes);
         }

@@ -8,10 +8,13 @@ namespace ZooLabApplication.Animals
 {
     public class Turtle : Reptile
     {
+        public override string[] FavoriteFood { get; } = { "Grass", "Fruits", "Vegetable" };
         public override int RequiredSpaceSqFt { get; }
         public Turtle(int id) : base(id)
         {
             RequiredSpaceSqFt = 5;
+            this.FeedSchedule.Add(8);
+            this.FeedSchedule.Add(20);
         }
         public override bool IsFriendlyWith(Animal animal)
         {

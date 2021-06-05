@@ -19,4 +19,16 @@ namespace ZooLabApplication.Foods
     {
 
     }
+    public class Fish : Food
+    {
+
+    }
+    public class Fruits : Food
+    {
+
+    }
+    public class Seeds : Food
+    {
+
+    }
 }

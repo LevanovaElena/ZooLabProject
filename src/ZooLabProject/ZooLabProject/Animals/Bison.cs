@@ -2,6 +2,7 @@
 {
     public class Bison : Mammal
     {
+        public override string[] FavoriteFood { get; } = { "Grass" };
         public Bison(int id) : base(id)
         {
 

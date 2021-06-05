@@ -8,6 +8,7 @@ namespace ZooLabApplication.Animals
 {
     public class Snake : Reptile
     {
+        public override string[] FavoriteFood { get; } = { "Meet" };
         public override int RequiredSpaceSqFt { get; }
         public Snake(int id) : base(id)
         {
