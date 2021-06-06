@@ -20,6 +20,7 @@ namespace ZooLabApplication
         public Enclosure AddEnclosure(string name,int squreFeet)
         {
             Enclosure enclosure = new Enclosure(name,squreFeet,this);
+            this.Enclosures.Add(enclosure);
             return enclosure;
         }
 
@@ -28,7 +29,6 @@ namespace ZooLabApplication
             Enclosure enclosure = null;
             try
             {
-                
                 foreach (Enclosure enclosureItem in this.Enclosures)
                 {
                     enclosureItem.AddAnimals(animal);
@@ -43,9 +43,19 @@ namespace ZooLabApplication
             {
                 throw new NoAvailableEclosureException(ex.Message);
             }
-
             return enclosure;
+        }
 
+        public void HireEmployee(IEmployees employee)
+        {
+            if (employee.AnimalExperiences.Count > 0)
+            {
+                //проверка опыта
+                //foreach(Animal animal in )
+                this.Enployees.Add(employee);
+
+            }
+            else throw new NoNeededExperienceException("No needed expiriense!");
         }
     }
 }

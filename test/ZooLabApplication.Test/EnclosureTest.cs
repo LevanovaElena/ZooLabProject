@@ -1,5 +1,6 @@
 ﻿using System;
 using Xunit;
+using ZooLabApplication.Animals;
 
 namespace ZooLabApplication.Test
 {
@@ -21,10 +22,11 @@ namespace ZooLabApplication.Test
             Enclosure enclosure = new Enclosure("Name", 2000, new Zoo("location"));
             Elephant elephant = new Elephant(12);
             Bison bison = new Bison(23);
-            int count = enclosure.Animals.Count;
+
+            int count = 0;
             enclosure.AddAnimals(elephant);
             count = count + 1;
-            Assert.Equal(count ++, enclosure.Animals.Count);
+            Assert.Equal(count, enclosure.Animals.Count);
             enclosure.AddAnimals(bison);
             count = count + 1;
             Assert.Equal(count, enclosure.Animals.Count);
@@ -44,8 +46,15 @@ namespace ZooLabApplication.Test
             Enclosure enclosure = new Enclosure("Name", 1500, new Zoo("location"));
             Elephant elephant = new Elephant(12);
             Bison bison = new Bison(23);
-            int count = enclosure.Animals.Count;
+            Parrot parrot = new Parrot(15);
+
+            int count = 0;
             enclosure.AddAnimals(elephant);
+            count = count + 1;
+            Assert.Equal(count, enclosure.Animals.Count);
+            Assert.Throws<NoAvailableSpaceException>(() => { enclosure.AddAnimals(bison); });
+
+            enclosure.AddAnimals(parrot);
             count = count + 1;
             Assert.Equal(count, enclosure.Animals.Count);
             Assert.Throws<NoAvailableSpaceException>(() => { enclosure.AddAnimals(bison); });
@@ -62,6 +71,20 @@ namespace ZooLabApplication.Test
             count = count + 1;
             Assert.Equal(count, enclosure.Animals.Count);
             Assert.Throws<NotFriendlyAnimalException>(() => { enclosure.AddAnimals(lion); });
+        }
+
+        [Fact]
+
+        public void ShoulReturnNumberOfSquereFeet()
+        {
+            Enclosure enclosure = new Enclosure("Name", 2000, new Zoo("location"));
+            Assert.Equal(0, enclosure.GetFillSqureFeet());
+
+            Elephant elephant = new Elephant(12);
+            enclosure.AddAnimals(elephant);
+            Assert.Equal(1000, enclosure.GetFillSqureFeet());
+            enclosure.AddAnimals(elephant);
+            Assert.Equal(2000, enclosure.GetFillSqureFeet());
         }
     }
 }

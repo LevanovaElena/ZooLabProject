@@ -21,14 +21,11 @@ namespace ZooLabApplication
         {
             if(Animals.Count>0)//animals is in this
             {
-                int fillSqureFeet = 0;
 
                 foreach (Animal animalItem in Animals)
                 {
-                    fillSqureFeet += animalItem.RequiredSpaceSqFt;
                     if (animalItem.IsFriendlyWith(animal))
                     {
-                        Animals.Add(animal);
                         break;
                     }
                     else
@@ -37,7 +34,7 @@ namespace ZooLabApplication
                         throw new NotFriendlyAnimalException("In enclosure is not friendly animal");
                     }
                 }
-                if(this.SqureFeet-fillSqureFeet>=animal.RequiredSpaceSqFt)
+                if(this.SqureFeet-this.GetFillSqureFeet()>=animal.RequiredSpaceSqFt)
                 {
                     Animals.Add(animal);
                 }
@@ -60,12 +57,21 @@ namespace ZooLabApplication
                     throw new NoAvailableSpaceException("Enclosure is too small");
                 }
             }
-            
-            
-            
+         }
 
-            
-      
+        public int GetFillSqureFeet()
+        {
+            if (Animals.Count > 0)//animals is in this
+            {
+                int fillSqureFeet = 0;
+
+                foreach (Animal animalItem in Animals)
+                {
+                    fillSqureFeet += animalItem.RequiredSpaceSqFt;
+                }
+                return fillSqureFeet;
+            }
+            else return 0;
         }
     }
 }

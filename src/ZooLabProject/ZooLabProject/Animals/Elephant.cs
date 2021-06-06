@@ -10,7 +10,7 @@ namespace ZooLabApplication
         }
         public override bool IsFriendlyWith(Animal animal)
         {
-            List<string> friendlyAnimals = new List<string>(){ "Bison", "Parrots", "Turtle" };
+            List<string> friendlyAnimals = new List<string>(){ "Bison", "Parrot", "Turtle" };
             string typeAnimal = animal.GetType().Name;
             if (typeAnimal.Equals(this.GetType().Name) || friendlyAnimals.IndexOf(typeAnimal)!=-1) return true;
             else return false;
