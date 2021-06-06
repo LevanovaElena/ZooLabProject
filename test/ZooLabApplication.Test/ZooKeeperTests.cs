@@ -38,5 +38,15 @@ namespace ZooLabApplication.Test
             Assert.True(zooKeeper.HasAnimalExerience(new Elephant(15)));
             Assert.False(zooKeeper.HasAnimalExerience(new Lion(15)));
         }
+        [Fact]
+        public void ShouldFeedAnimal()
+        {
+            ZooKeeper zooKeeper = new("name", "lastname");
+            Elephant elephant = new Elephant(15);
+            zooKeeper.AddAnimalExperience(elephant);
+            Assert.True(zooKeeper.FeedAnimal(elephant));
+            zooKeeper.FeedAnimal(elephant);
+            Assert.False(zooKeeper.FeedAnimal(elephant));
+        }
     }
 }

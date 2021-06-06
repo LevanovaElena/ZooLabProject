@@ -7,14 +7,14 @@ using ZooLabApplication.Foods;
 
 namespace ZooLabApplication.Employees
 {
-    public class ZooKeeper : IEmployees
+    public class Veterinarian : IEmployees
     {
         public string FirstName { get; }
 
         public string LastName { get; }
         public List<string> AnimalExperiences { get; set; } = new List<string>();
 
-        public ZooKeeper(string firstName,string lastName)
+        public Veterinarian(string firstName,string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -32,28 +32,22 @@ namespace ZooLabApplication.Employees
             else return false;
         }
 
-        public bool FeedAnimal(Animal animal)
+        public bool HealAnimal(Animal animal)
         {
-            try
+            if (animal.Seek)
             {
-                //выберем еду
-                int max = animal.FavoriteFood.Length-1;
-                int randonFoodNumber = 0;
-                Food food;
-                if (max > 0)
-                {
-                    Random rnd = new Random();
-                    //выберем еду рандомно
-                    randonFoodNumber = rnd.Next(0, max);
-                }
-                Type TestType = Type.GetType("ZooLabApplication.Foods." + animal.FavoriteFood[randonFoodNumber]);
-                //получаем конструктор
+                Medicine medicine;
+                string[] medicines = { "Antibiotics", "AntiDepression", "AntiInflammatory" };
+                Random rnd = new Random();
+                //выберем таблетки
+                int randonMedNumber = rnd.Next(0, 2);
+                Type TestType = Type.GetType("ZooLabApplication." + medicines[randonMedNumber]);
                 object instance = Activator.CreateInstance(TestType);
-                food = (Food)instance;
-                animal.Feed(food, this);
+                medicine = (Medicine)instance;
+                animal.Heal(medicine);
                 return true;
             }
-            catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption ex) { return false; }
+            else return false;
         }
     }
 }
