@@ -53,7 +53,7 @@ namespace ZooLabApplication.Employees
                 animal.Feed(food, this);
                 return true;
             }
-            catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption ex) { return false; }
+            catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption) { return false; }
         }
     }
 }
