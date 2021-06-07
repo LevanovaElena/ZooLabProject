@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58FB9F79-2FD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{64D4D8EE-707F-4258-ACDD-C0486AF8D80B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooApplication", "ZooLabProject\ZooApplication.csproj", "{75B87E43-8949-46F4-B70B-D83FFD855FD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZooLabApplication", "ZooLabProject\ZooLabApplication.csproj", "{75B87E43-8949-46F4-B70B-D83FFD855FD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZooLabApplication.Test", "..\..\test\ZooLabApplication.Test\ZooLabApplication.Test.csproj", "{895D8FCA-3CF1-4F3C-B48C-559E7A8ED355}"
 EndProject
