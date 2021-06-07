@@ -63,7 +63,11 @@ namespace ZooLabApplication.Test
         [Fact]
         public void ShouldAddNotFriendlyAnimalInBigEnclosure()
         {
-            Enclosure enclosure = new Enclosure("Name", 2000, new Zoo("location"));
+            Zoo zoo = new Zoo("location");
+
+
+            Enclosure enclosure = new Enclosure("Name", 2000, zoo);
+
             Elephant elephant = new Elephant(12);
             Lion lion = new Lion(23);
             int count = enclosure.Animals.Count;
@@ -71,6 +75,9 @@ namespace ZooLabApplication.Test
             count = count + 1;
             Assert.Equal(count, enclosure.Animals.Count);
             Assert.Throws<NotFriendlyAnimalException>(() => { enclosure.AddAnimals(lion); });
+
+
+            
         }
 
         [Fact]
