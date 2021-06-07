@@ -27,18 +27,12 @@ namespace ZooLabApplication
             Id = id;
         }
         //Добавляем кормление в FeedTimes,если еда не подходит, выдаем исключение
-        public void Feed(Food food, ZooKeeper zooKeeper)
+        public void Feed(Food food, ZooKeeper zooKeeper,DateTime date)
         {
-            if (this.FeedTimes.Count >= 2 && this.FeedTimes[FeedTimes.Count - 2].FeedOfTime.Date == DateTime.Now.Date)
-            {
-                throw new AnimalHasAlreadyBeenFedTwoTimesAnimalExeption("Animal Has Already Been Fed Two Times In this day!");
-            }
-            else
-            {
-                if (Array.IndexOf(FavoriteFood, food.GetType().Name) != -1)
-                    this.FeedTimes.Add(new FeedTime(DateTime.Now, zooKeeper));
+
+                if (Array.IndexOf(FavoriteFood, food.GetType().Name) != -1) this.FeedTimes.Add(new FeedTime(date, zooKeeper));
                 else throw new ImproperFoodAnimalExeption("Time for feed not correct!This animal should feed in " + this.FeedSchedule[0] + " or in " + this.FeedSchedule[1]);
-            }
+            
         }
 
         public bool IsSeek()

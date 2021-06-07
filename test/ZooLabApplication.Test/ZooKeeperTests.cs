@@ -44,9 +44,9 @@ namespace ZooLabApplication.Test
             ZooKeeper zooKeeper = new("name", "lastname");
             Elephant elephant = new Elephant(15);
             zooKeeper.AddAnimalExperience(elephant);
-            Assert.True(zooKeeper.FeedAnimal(elephant));
-            zooKeeper.FeedAnimal(elephant);
-            Assert.False(zooKeeper.FeedAnimal(elephant));
+            Assert.True(zooKeeper.FeedAnimal(elephant, DateTime.Now));
+            zooKeeper.FeedAnimal(elephant, DateTime.Now);
+            Assert.True(zooKeeper.FeedAnimal(elephant, DateTime.Now));
         }
     }
 }
