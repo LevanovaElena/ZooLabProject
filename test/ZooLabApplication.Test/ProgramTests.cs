@@ -33,9 +33,39 @@ namespace ZooLabApplication.Test
             Assert.Equal(5, myProgram.zooApp.Zoos[1].Enclosures.Count);
 
             //added animals 
-            //Assert.Equal(3, myProgram.zooApp.Zoos[0].Enclosures[0].Animals.Count);
-            //Assert.Equal(3, myProgram.zooApp.Zoos[0].Enclosures[3].Animals.Count);
+            Assert.Equal(3, myProgram.zooApp.Zoos[0].Enclosures[0].Animals.Count);
+            Assert.Equal(2, myProgram.zooApp.Zoos[0].Enclosures[1].Animals.Count);
+            Assert.Equal(3, myProgram.zooApp.Zoos[0].Enclosures[2].Animals.Count);
+            Assert.Equal(3, myProgram.zooApp.Zoos[0].Enclosures[3].Animals.Count);
+            Assert.Equal(2, myProgram.zooApp.Zoos[0].Enclosures[4].Animals.Count);
+
+            Assert.Equal(3, myProgram.zooApp.Zoos[1].Enclosures[0].Animals.Count);
+            Assert.Equal(5, myProgram.zooApp.Zoos[1].Enclosures[1].Animals.Count);
+            Assert.Equal(2, myProgram.zooApp.Zoos[1].Enclosures[2].Animals.Count);
+            Assert.Equal(3, myProgram.zooApp.Zoos[1].Enclosures[3].Animals.Count);
+            Assert.Equal(2, myProgram.zooApp.Zoos[1].Enclosures[4].Animals.Count);
+
         }
 
+        [Fact]
+        public void ShouldBeHireEmploee()
+        {
+            MyProgram myProgram = new MyProgram();
+            myProgram.InitialZooCorp();
+            myProgram.HireEmpoloyeers(myProgram.zooApp.Zoos[0],true);
+            Assert.Equal(3, myProgram.zooApp.Zoos[0].Enployees.Count);
+            myProgram.HireEmpoloyeers(myProgram.zooApp.Zoos[1], false);
+            Assert.Equal(3, myProgram.zooApp.Zoos[1].Enployees.Count);
+        }
+
+        [Fact]
+        public void ShouldBeHealAnimals()
+        {
+            MyProgram myProgram = new MyProgram();
+            myProgram.InitialZooCorp();
+            myProgram.HireEmpoloyeers(myProgram.zooApp.Zoos[0], true);
+            myProgram.HealAnyAnimals(myProgram.zooApp.Zoos[0]);
+            Assert.Equal(70, myProgram.myConsole.Messages.Count);
+        }
     }
 }
