@@ -37,7 +37,7 @@ namespace ZooLabApplication
             {
                 this.FeedTimes.Add(new FeedTime(date, zooKeeper));
                 myConsole?.WriteLine("Animal " + this.GetType().Name + " id=" + this.Id +
-                    " was fed by zooKeeper "+zooKeeper.LastName+ "with "+food.GetType().Name+" at "+ date.Date);
+                    " was fed by zooKeeper "+zooKeeper.LastName+ " with "+food.GetType().Name+" at "+ date.Date);
             }
             else throw new ImproperFoodAnimalExeption("Time for feed not correct!This animal should feed in " + this.FeedSchedule[0] + " or in " + this.FeedSchedule[1]);
             
@@ -45,8 +45,9 @@ namespace ZooLabApplication
 
         public bool IsSeek()
         {
-            myConsole?.WriteLine("Animal " + this.GetType().Name + " id=" + this.Id + " got sick!");
-            return Seek = Seek ? false : true;
+            Seek = Seek ? false : true;
+            if(Seek)myConsole?.WriteLine("Animal " + this.GetType().Name + " id=" + this.Id + " got sick!");
+            return Seek;
           
         }
 

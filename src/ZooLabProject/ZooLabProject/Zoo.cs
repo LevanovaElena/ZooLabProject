@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZooLabApplication.Common;
 using ZooLabApplication.Employees;
 
@@ -42,6 +39,7 @@ namespace ZooLabApplication
                 {
                     NumberOfAnimal = NumberOfAnimal + 1;
                     animal.Id = NumberOfAnimal;
+                    animal.myConsole = myConsole;
                     enclosureItem.AddAnimals(animal);
                     enclosure = enclosureItem;
                     break;
@@ -90,8 +88,7 @@ namespace ZooLabApplication
                         }
                         if (isHire) break;
                     }
-                    if (isHire) break;
-                }
+                    if (isHire) break;}
                 if (!isHire) throw new NoNeededExperienceException("No needed expiriense!");
 
             }
@@ -99,11 +96,7 @@ namespace ZooLabApplication
         }
 
         public void FeedAnimals(DateTime dateTime)
-        {/*У вас должна быть возможность активировать «Накормить всех животных» из класса «Зоопарк».
-                Работник зоопарка должен посетить каждый вольер и покормить животное.
-                Кормить животное можно только дважды за 1 день.
-                Например: если у вас есть 2 смотрителя зоопарка с одинаковым опытом, вы должны разделить кормление животных между ними.*/
-            //проверка опыта
+        {
             Queue<ZooKeeper> keepersWichFeed = new Queue<ZooKeeper>();
             foreach (Enclosure enclosure in this.Enclosures)
             {
@@ -155,7 +148,7 @@ namespace ZooLabApplication
                 {
                     if (animal.Seek)
                     {
-                        List<Veterinarian> listVeterinar = this.GetListOfAvaliableVeterinarian(animal.GetType().Name);
+                        List<Veterinarian> listVeterinar = this.GetListOfAvaliableVeterinarian("oneForAll");
                         listVeterinar[0].HealAnimal(animal);
                     }
                 }
@@ -165,13 +158,13 @@ namespace ZooLabApplication
         public List<ZooKeeper> GetListOfAvaliableKeepers(string nameExpiriens)
         {
             List<ZooKeeper> list = new List<ZooKeeper>();
-            foreach(ZooKeeper zooKeeper in this.Enployees)
+            foreach(IEmployees zooKeeper in this.Enployees)
             {
                 if(zooKeeper.GetType().Name=="ZooKeeper")
                 {
                     foreach (string animalExperience in zooKeeper.AnimalExperiences)
                     {
-                        if (animalExperience == nameExpiriens) list.Add(zooKeeper);
+                        if (animalExperience == nameExpiriens) list.Add((ZooKeeper)zooKeeper);
                     }
 
                 }
@@ -182,14 +175,18 @@ namespace ZooLabApplication
         public List<Veterinarian> GetListOfAvaliableVeterinarian(string nameExpiriens)
         {
             List<Veterinarian> list = new List<Veterinarian>();
-            foreach (Veterinarian veterinarian in this.Enployees)
+            foreach (IEmployees veterinarian in this.Enployees)
             {
                 if (veterinarian.GetType().Name == "Veterinarian")
                 {
-                    foreach (string animalExperience in veterinarian.AnimalExperiences)
+                    if (nameExpiriens != "oneForAll")
                     {
-                        if (animalExperience == nameExpiriens) list.Add(veterinarian);
+                        foreach (string animalExperience in veterinarian.AnimalExperiences)
+                        {
+                            if (animalExperience == nameExpiriens) list.Add((Veterinarian)veterinarian);
+                        }
                     }
+                    else list.Add((Veterinarian)veterinarian);
 
                 }
             }
