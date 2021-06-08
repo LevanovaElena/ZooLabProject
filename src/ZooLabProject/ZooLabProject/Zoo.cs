@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ZooLabApplication.Common;
 using ZooLabApplication.Employees;
+using ZooLabApplication.HireValidator;
 
 namespace ZooLabApplication
 {
@@ -65,34 +66,20 @@ namespace ZooLabApplication
         }
 
         public void HireEmployee(IEmployees employee)
-
         {
-            bool isHire = false;
+            IHireValidator hireValidator = HireValidatorProvider.GetHireValidator(employee);
+            List<ValidationError> listErrors=new List<ValidationError>();
+            if(hireValidator!=null) listErrors = hireValidator.ValidateEmployee(employee,this);
 
-            if (employee.AnimalExperiences.Count > 0)
+            if (listErrors.Count == 0)
             {
-                //проверка опыта
-                foreach(string animalExperience in employee.AnimalExperiences)
-                {
-                    foreach(Enclosure enclosure in this.Enclosures)
-                    {
-                        foreach(Animal animal in enclosure.Animals)
-                        {
-                            if (animalExperience == animal.GetType().Name)
-                            {
-                                this.Enployees.Add(employee);
-                                isHire = true;
-                                break;
-                            }
-                            
-                        }
-                        if (isHire) break;
-                    }
-                    if (isHire) break;}
-                if (!isHire) throw new NoNeededExperienceException("No needed expiriense!");
-
+                this.Enployees.Add(employee);
             }
-            else throw new NoNeededExperienceException("No needed expiriense!");
+            else
+            {
+                throw new NoNeededExperienceException("No needed expiriense!");
+            }
+          
         }
 
         public void FeedAnimals(DateTime dateTime)
