@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooLabApplication.Common;
 using ZooLabApplication.Employees;
 
 namespace ZooLabApplication
@@ -12,16 +13,20 @@ namespace ZooLabApplication
         public List<Enclosure> Enclosures { get; private set; } = new List<Enclosure>();
         public List<IEmployees> Enployees { get; private set; } = new List<IEmployees>();
         public string Location { get; private set; }
+        public ZooConsole myConsole { get; set; }
+        public int NumberOfAnimal { get; private set; } = 0;
 
-        public Zoo(string location)
+        public Zoo(string location,ZooConsole console=null)
         {
             Location = location;
+            myConsole = console;
         }
 
         public Enclosure AddEnclosure(string name,int squreFeet)
         {
-            Enclosure enclosure = new Enclosure(name,squreFeet,this);
+            Enclosure enclosure = new Enclosure(name,squreFeet,this,myConsole);
             this.Enclosures.Add(enclosure);
+            myConsole?.WriteLine("Enclosure  with a name \""+name+ "\" added in zoo " + this.Location);
             return enclosure;
         }
 
@@ -30,25 +35,32 @@ namespace ZooLabApplication
             Enclosure enclosure = null;
             int itemNumber = 0;
 
-                foreach (Enclosure enclosureItem in this.Enclosures)
+            foreach (Enclosure enclosureItem in this.Enclosures)
+            {
+                itemNumber++;
+                try
                 {
-                    itemNumber++;
-                    try
-                    {
-                        enclosureItem.AddAnimals(animal);
-                    }
-                    catch (NotFriendlyAnimalException ex)
-                    {
-                        if (itemNumber < this.Enclosures.Count) continue;
-                        else throw new NoAvailableEclosureException(ex.Message);//"No enclosures with friendly animals!"
-                    }
-                    catch (NoAvailableSpaceException ex)
-                    {
-                        if (itemNumber < this.Enclosures.Count) continue;
-                        else throw new NoAvailableEclosureException(ex.Message);
-                    }
+                    NumberOfAnimal = NumberOfAnimal + 1;
+                    animal.Id = NumberOfAnimal;
+                    enclosureItem.AddAnimals(animal);
                     enclosure = enclosureItem;
+                    break;
+                        
                 }
+                catch (NotFriendlyAnimalException ex)
+                {
+                    NumberOfAnimal = NumberOfAnimal - 1;
+                    if (itemNumber < this.Enclosures.Count) continue;
+                    else throw new NoAvailableEclosureException(ex.Message);//"No enclosures with friendly animals!"
+                }
+                catch (NoAvailableSpaceException ex)
+                {
+                    NumberOfAnimal = NumberOfAnimal - 1;
+                    if (itemNumber < this.Enclosures.Count) continue;
+                    else throw new NoAvailableEclosureException("Not available enclosure,because "+ ex.Message);
+                }
+                    
+            }
 
             
             return enclosure;
@@ -98,7 +110,7 @@ namespace ZooLabApplication
                 foreach (Animal animal in enclosure.Animals)
                 {
                     //проверяем кормили ли уже 2 раза
-                    if (animal.FeedTimes.Count >= 2 && animal.FeedTimes[animal.FeedTimes.Count - 2].FeedOfTime.Date == DateTime.Now.Date)
+                    if (animal.FeedTimes.Count >= 2 && animal.FeedTimes[animal.FeedTimes.Count - 2].FeedOfTime.Date == dateTime.Date)
                     {
                         continue;
                     }
@@ -108,23 +120,23 @@ namespace ZooLabApplication
                         List<ZooKeeper> listKeeper = this.GetListOfAvaliableKeepers(animal.GetType().Name);
                         if (listKeeper.Count == 1)
                         { // кормим животное
-                            listKeeper[0].FeedAnimal(animal);
+                            listKeeper[0].FeedAnimal(animal,dateTime);
                         }
                         else if (listKeeper.Count >= 2)
                         {
                             //проверяем кормил ли уже 
                             if (keepersWichFeed.Count == listKeeper.Count)//число кормивших равно числу существующих-начинаем заново
                             {
-                                keepersWichFeed.Dequeue().FeedAnimal(animal);
+                                keepersWichFeed.Dequeue().FeedAnimal(animal, dateTime);
                             }
                             else if (keepersWichFeed.Count == 0)//число кормивших меньше числа существующих-берем того,кто еще не кормил
                             {
-                                listKeeper[0].FeedAnimal(animal);
+                                listKeeper[0].FeedAnimal(animal, dateTime);
                                 keepersWichFeed.Enqueue(listKeeper[0]);
                             }
                             else if (keepersWichFeed.Count < listKeeper.Count)//число кормивших меньше числа существующих-берем того,кто еще не кормил
                             {
-                                listKeeper[keepersWichFeed.Count].FeedAnimal(animal);
+                                listKeeper[keepersWichFeed.Count].FeedAnimal(animal, dateTime);
                                 keepersWichFeed.Enqueue(listKeeper[keepersWichFeed.Count]);
                             }
                         }
@@ -135,6 +147,21 @@ namespace ZooLabApplication
 
         }
 
+        public void HealAnimals()
+        {
+            foreach (Enclosure enclosure in this.Enclosures)
+            {
+                foreach (Animal animal in enclosure.Animals)
+                {
+                    if (animal.Seek)
+                    {
+                        List<Veterinarian> listVeterinar = this.GetListOfAvaliableVeterinarian(animal.GetType().Name);
+                        listVeterinar[0].HealAnimal(animal);
+                    }
+                }
+            }
+
+        }
         public List<ZooKeeper> GetListOfAvaliableKeepers(string nameExpiriens)
         {
             List<ZooKeeper> list = new List<ZooKeeper>();
@@ -151,38 +178,24 @@ namespace ZooLabApplication
             }
             return list;
         }
-        /* public Dictionary<string, int> GetListOfAnimalForFeedinng()
-{
-    Dictionary<string, int> listAmimal =new Dictionary<string, int>();
-    foreach (Enclosure enclosure in this.Enclosures)
-    {
-        foreach (Animal animal in enclosure.Animals)
-        {
-            //животное кормили уже 2 раза
-            if (animal.FeedTimes.Count >= 2 && animal.FeedTimes[animal.FeedTimes.Count - 2].FeedOfTime.Date == DateTime.Now.Date)
-            {
-                continue;
-            }
-            else 
-            {
-                if (listAmimal.Count > 0)
-                {
-                    foreach (KeyValuePair<string, int> item in  listAmimal)
-                    {
-                        string nameAnimal = animal.GetType().Name;
-                        if (item.Key == nameAnimal) listAmimal[item.Key] = item.Value + 1;
-                        break;
-                    }
-                }
-                else
-                {
-                    listAmimal.Add(animal.GetType().Name, 1);
-                }
-            }
-        }
-    }
 
-    return listAmimal;*/
+        public List<Veterinarian> GetListOfAvaliableVeterinarian(string nameExpiriens)
+        {
+            List<Veterinarian> list = new List<Veterinarian>();
+            foreach (Veterinarian veterinarian in this.Enployees)
+            {
+                if (veterinarian.GetType().Name == "Veterinarian")
+                {
+                    foreach (string animalExperience in veterinarian.AnimalExperiences)
+                    {
+                        if (animalExperience == nameExpiriens) list.Add(veterinarian);
+                    }
+
+                }
+            }
+            return list;
+        }
+
 
     }
 }

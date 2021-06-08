@@ -32,7 +32,7 @@ namespace ZooLabApplication.Employees
             else return false;
         }
 
-        public bool FeedAnimal(Animal animal)
+        public bool FeedAnimal(Animal animal,DateTime dateTime)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace ZooLabApplication.Employees
                 //получаем конструктор
                 object instance = Activator.CreateInstance(TestType);
                 food = (Food)instance;
-                animal.Feed(food, this);
+                animal.Feed(food, this,dateTime);
                 return true;
             }
             catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption) { return false; }

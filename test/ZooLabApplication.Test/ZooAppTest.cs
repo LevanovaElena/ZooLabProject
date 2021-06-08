@@ -17,7 +17,9 @@ namespace ZooLabApplication.Test
         {
             ZooApp zooApp = new ZooApp();
             zooApp.AddZoo(new Zoo("Canada"));
-            //Assert.NotEmpty(zooApp);
+            Assert.Single(zooApp.Zoos);
+            zooApp.AddZoo(new Zoo("NewZoo"));
+            Assert.Equal(2,zooApp.Zoos.Count);
         }
 
     }
