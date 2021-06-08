@@ -162,8 +162,14 @@ namespace ZooLabApplication
         }
         public void FeedAllAnimals(Zoo zoo)
         {
-            myConsole.WriteLine("\n/////Feeding animals in Zoo " + zoo.Location + " /////////////");
-            zoo.FeedAnimals(DateTime.Now);
+            myConsole.WriteLine("\n/////Feeding Mammal in Zoo " + zoo.Location + " /////////////");
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 11, 11, 11));
+            myConsole.WriteLine("\n/////Feeding Snakes in Zoo " + zoo.Location + " /////////////");
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 6, 11, 11));
+            myConsole.WriteLine("\n/////Feeding Birds in Zoo " + zoo.Location + " /////////////");
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 9, 11, 11));
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 9, 11, 11));
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 9, 11, 11));
         }
     }
 }

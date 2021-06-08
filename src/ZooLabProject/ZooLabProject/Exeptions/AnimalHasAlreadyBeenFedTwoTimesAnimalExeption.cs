@@ -8,9 +8,9 @@ namespace ZooLabApplication
     {
 
 
-        /*public AnimalHasAlreadyBeenFedTwoTimesAnimalExeption(string message) : base(message)
+        public AnimalHasAlreadyBeenFedTwoTimesAnimalExeption(string message) : base(message)
         {
-        }*/
+        }
 
        
     }

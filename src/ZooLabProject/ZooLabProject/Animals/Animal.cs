@@ -32,14 +32,24 @@ namespace ZooLabApplication
         //Добавляем кормление в FeedTimes,если еда не подходит, выдаем исключение
         public void Feed(Food food, ZooKeeper zooKeeper,DateTime date)
         {
-
-            if (Array.IndexOf(FavoriteFood, food.GetType().Name) != -1)
+            if (Array.IndexOf(FavoriteFood, food.GetType().Name) == -1)
+            {
+                throw new ImproperFoodAnimalExeption("Food for feed not correct!");
+            }
+            else if (FeedSchedule.IndexOf(date.Hour) == -1) 
+            {
+                throw new ImproperTimeForFedAnimalExeption(" should feed in " + this.FeedSchedule[0] + " or in " + this.FeedSchedule[1]);
+            }
+            else if(this.FeedTimes.Count >= 2 && this.FeedTimes[this.FeedTimes.Count - 2].FeedOfTime.Date == date.Date)
+            {
+                throw new AnimalHasAlreadyBeenFedTwoTimesAnimalExeption("Animal already feed two times!");
+            }
+            else
             {
                 this.FeedTimes.Add(new FeedTime(date, zooKeeper));
                 myConsole?.WriteLine("Animal " + this.GetType().Name + " id=" + this.Id +
-                    " was fed by zooKeeper "+zooKeeper.LastName+ " with "+food.GetType().Name+" at "+ date.Date);
+                    " was fed by zooKeeper " + zooKeeper.LastName + " with " + food.GetType().Name + " at " + date.ToLongTimeString());
             }
-            else throw new ImproperFoodAnimalExeption("Time for feed not correct!This animal should feed in " + this.FeedSchedule[0] + " or in " + this.FeedSchedule[1]);
             
         }
 
@@ -59,7 +69,7 @@ namespace ZooLabApplication
             }
             else
             {
-                throw new NumberOfFeedsExceededAnimalExeption("Number of feeds exceeded!Must be two times!");
+                throw new NumberOfFeedsExceededAnimalExeption("Number of feeds exceeded! Must be two times!");
             }
 
         }

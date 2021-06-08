@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooLabApplication.Common;
 using ZooLabApplication.Foods;
 
 namespace ZooLabApplication.Employees
@@ -14,10 +15,13 @@ namespace ZooLabApplication.Employees
         public string LastName { get; }
         public List<string> AnimalExperiences { get; set; } = new List<string>();
 
-        public ZooKeeper(string firstName,string lastName)
+        public ZooConsole myConsole { get; set; }
+
+        public ZooKeeper(string firstName,string lastName,ZooConsole console=null)
         {
             FirstName = firstName;
             LastName = lastName;
+            myConsole = console;
         }
        public void AddAnimalExperience(Animal animal) {
             AnimalExperiences.Add(animal.GetType().Name);
@@ -50,10 +54,20 @@ namespace ZooLabApplication.Employees
                 //получаем конструктор
                 object instance = Activator.CreateInstance(TestType);
                 food = (Food)instance;
+                animal.myConsole = myConsole;
                 animal.Feed(food, this,dateTime);
                 return true;
             }
-            catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption) { return false; }
+            catch(AnimalHasAlreadyBeenFedTwoTimesAnimalExeption) 
+            {
+                myConsole?.WriteLine($"Animal {animal.GetType().Name} id={animal.Id} yet feed tow times!");
+                return false; 
+            }
+            catch (ImproperTimeForFedAnimalExeption ex)
+            {
+                myConsole?.WriteLine($"Time for feed not correct!Animal {animal.GetType().Name} id={animal.Id} "+ex.Message);
+                return false;
+            }
         }
     }
 }

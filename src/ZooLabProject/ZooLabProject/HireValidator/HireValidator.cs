@@ -3,46 +3,100 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooLabApplication.Employees;
 
 namespace ZooLabApplication.HireValidator
 {
     public interface IHireValidator
     {
+        List<ValidationError> ValidateEmployee(IEmployees employee,Zoo zoo);
     }
     public abstract class HireValidator
     {
-        public abstract List<ValiationError> ValidateEmployee(IEmployees employee); 
+        public abstract List<ValidationError> ValidateEmployee(IEmployees employee,Zoo zoo); 
     }
 
-    public class ValiationError
+    public class ValidationError
     {
+        public string Message { get; }
 
+        public ValidationError(string message)
+        {
+            Message = message;
+        }
     }
 
-    /* public class VeterinarianHireValidator : HireValidator, IHireValidator
+     public class VeterinarianHireValidator : HireValidator, IHireValidator
      {
-         public override List<ValiationError> ValidateEmployee(IEmployees employee)
+         public override List<ValidationError> ValidateEmployee(IEmployees employee,Zoo zoo)
          {
-             throw new NotImplementedException();
-         }
+            List<ValidationError> listErrors = new List<ValidationError>();
+            Veterinarian veterinarian = employee as Veterinarian;
+
+            bool isHire = false;
+
+            foreach (Enclosure enclosure in zoo.Enclosures)
+            {
+                foreach (Animal animal in enclosure.Animals)
+                {
+                    if (veterinarian.HasAnimalExerience(animal))
+                    {
+                        isHire = true;
+                        break;
+                    }
+                    else continue;
+                }
+                if (isHire) break;
+            }
+            if (!isHire) listErrors.Add(new ValidationError("No needed expiriense!"));
+            return listErrors;
+        }
      }
      public class ZooKeeperHireValidator : HireValidator, IHireValidator
      {
-         public override List<ValiationError> ValidateEmployee(IEmployees employee)
+         public override List<ValidationError> ValidateEmployee(IEmployees employee,Zoo zoo)
          {
-             throw new NotImplementedException();
+            List<ValidationError> listErrors = new List<ValidationError>();
+            ZooKeeper zooKeeper = employee as ZooKeeper;
+
+            bool isHire = false;
+
+
+            foreach (Enclosure enclosure in zoo.Enclosures)
+            {
+                foreach (Animal animal in enclosure.Animals)
+                {
+                    if (zooKeeper.HasAnimalExerience(animal))
+                    {
+                        isHire = true;
+                        break;
+                    }
+                    else continue;
+                }
+                if (isHire) break;
+            }
+            if (!isHire) listErrors.Add(new ValidationError("No needed expiriense!"));
+            return listErrors;
          }
      }
 
-     public class HireValidatorProvider : IHireValidator
+     public class HireValidatorProvider 
      {
-         IEmployeeHireValidator GetHireValidator(IEmployees employees)
+         public static IHireValidator GetHireValidator(IEmployees employee)
          {
-             throw new NotImplementedException();
-         }
-     }*/
+            string typeOfEmployee = employee.GetType().Name;
 
-    internal interface IEmployeeHireValidator
-    {
+            if (typeOfEmployee == "ZooKeeper")
+            {
+                return new ZooKeeperHireValidator();
+            }
+            else //if (typeOfEmployee == "Veterinarian")
+            {
+                return new VeterinarianHireValidator();
+            }
+
+     }
+
     }
+
 }
