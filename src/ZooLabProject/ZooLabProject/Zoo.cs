@@ -89,18 +89,14 @@ namespace ZooLabApplication
             {
                 foreach (Animal animal in enclosure.Animals)
                 {
-                    //проверяем кормили ли уже 2 раза
-                    if (animal.FeedTimes.Count >= 2 && animal.FeedTimes[animal.FeedTimes.Count - 2].FeedOfTime.Date == dateTime.Date)
-                    {
-                        continue;
-                    }
-                    else
-                    {
+                 
                         //ищем подходящих работников
                         List<ZooKeeper> listKeeper = this.GetListOfAvaliableKeepers(animal.GetType().Name);
                         if (listKeeper.Count == 1)
                         { // кормим животное
-                            listKeeper[0].FeedAnimal(animal,dateTime);
+                            
+                            listKeeper[0].FeedAnimal(animal, dateTime);
+
                         }
                         else if (listKeeper.Count >= 2)
                         {
@@ -120,7 +116,7 @@ namespace ZooLabApplication
                                 keepersWichFeed.Enqueue(listKeeper[keepersWichFeed.Count]);
                             }
                         }
-                    }
+                    
                 }
             }
 
@@ -151,7 +147,12 @@ namespace ZooLabApplication
                 {
                     foreach (string animalExperience in zooKeeper.AnimalExperiences)
                     {
-                        if (animalExperience == nameExpiriens) list.Add((ZooKeeper)zooKeeper);
+                        if (animalExperience == nameExpiriens)
+                        {
+                            ZooKeeper zooKeep = zooKeeper as ZooKeeper;
+                            zooKeep.myConsole = myConsole;
+                            list.Add(zooKeep);
+                        }
                     }
 
                 }

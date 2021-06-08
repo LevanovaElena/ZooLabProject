@@ -84,13 +84,14 @@ namespace ZooLabApplication.Test
             int count= animal.FeedTimes.Count;
             count++;
             ZooKeeper zooKeeper = new ZooKeeper("name", "lastname");
-            animal.Feed(new Grass(),zooKeeper, DateTime.Now);
+            animal.Feed(new Grass(),zooKeeper, new DateTime(2021,11,23,11,11,11));
 
             Assert.Equal(count, animal.FeedTimes.Count);
             Assert.Equal(zooKeeper, animal.FeedTimes[count-1].FeedByZooKeeper);
 
             //error - not favorite food
             Assert.Throws<ImproperFoodAnimalExeption>(() => { animal.Feed(new Meet(), zooKeeper,DateTime.Now); });
+            Assert.Throws<ImproperTimeForFedAnimalExeption>(() => { animal.Feed(new Grass(), zooKeeper, DateTime.Now); });
             //error - животное покормлено уже 2 раза
             //animal.Feed(new Grass(), zooKeeper);
             //Assert.Throws<AnimalHasAlreadyBeenFedTwoTimesAnimalExeption>(() => { animal.Feed(new Meet(), zooKeeper); });

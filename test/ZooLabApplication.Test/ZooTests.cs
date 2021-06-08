@@ -100,7 +100,7 @@ namespace ZooLabApplication.Test
             IEmployees zooKeeper = new ZooKeeper("firstName", "lastName");
             zooKeeper.AddAnimalExperience(lion);
             zoo.HireEmployee(zooKeeper);
-            zoo.FeedAnimals(DateTime.Now);
+            zoo.FeedAnimals(new DateTime(2021, 11, 23, 11, 11, 11));
             Assert.Equal(zooKeeper, lion.FeedTimes[0].FeedByZooKeeper);
 
             //добавим еще льва и похожего работника
@@ -109,21 +109,21 @@ namespace ZooLabApplication.Test
             IEmployees zooKeeper2 = new ZooKeeper("firstName2", "lastName2");
             zooKeeper2.AddAnimalExperience(lion2);
             zoo.HireEmployee(zooKeeper2);
-            zoo.FeedAnimals(DateTime.Now);
+            zoo.FeedAnimals(new DateTime(2021, 11, 23, 11, 11, 11));
             Assert.Equal(zooKeeper, lion.FeedTimes[0].FeedByZooKeeper);
             Assert.Equal(zooKeeper2, lion2.FeedTimes[0].FeedByZooKeeper);
 
             //покормим 2й раз
-            zoo.FeedAnimals(DateTime.Now);
+            zoo.FeedAnimals(new DateTime(2021, 11, 23, 11, 11, 11));
             Assert.Equal(2, lion.FeedTimes.Count);
             Assert.Equal(2, lion2.FeedTimes.Count);
             Assert.Equal(zooKeeper, lion.FeedTimes[1].FeedByZooKeeper);
-            Assert.Equal(zooKeeper, lion2.FeedTimes[1].FeedByZooKeeper);
+            Assert.Equal(zooKeeper2, lion2.FeedTimes[1].FeedByZooKeeper);
 
             //льва 3 а работников 2
             Lion lion3 = new Lion(13);
             zoo.FindAvailableEnclosure(lion3);
-            zoo.FeedAnimals(DateTime.Today.AddDays(1));
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 11, 11, 11));
             Assert.Equal(zooKeeper, lion.FeedTimes[0].FeedByZooKeeper);
             Assert.Equal(zooKeeper2, lion2.FeedTimes[0].FeedByZooKeeper);
             Assert.Equal(zooKeeper, lion3.FeedTimes[0].FeedByZooKeeper);
@@ -132,7 +132,7 @@ namespace ZooLabApplication.Test
             IEmployees zooKeeper3 = new ZooKeeper("firstName3", "lastName3");
             zooKeeper3.AddAnimalExperience(lion3);
             zoo.HireEmployee(zooKeeper3);
-            zoo.FeedAnimals(DateTime.Today.AddDays(1));
+            zoo.FeedAnimals(new DateTime(2021, 12, 23, 11, 11, 11));
             Assert.Equal(zooKeeper, lion.FeedTimes[2].FeedByZooKeeper);
             Assert.Equal(zooKeeper2, lion2.FeedTimes[2].FeedByZooKeeper);
             Assert.Equal(zooKeeper3, lion3.FeedTimes[1].FeedByZooKeeper);
