@@ -1,4 +1,4 @@
-﻿namespace ZooLabApplication.Test
+﻿namespace ZooLabApplication
 {
     public class Bison : Mammal
     {

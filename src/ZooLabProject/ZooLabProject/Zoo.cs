@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZooLabApplication.Common;
 using ZooLabApplication.Employees;
 
 namespace ZooLabApplication
@@ -12,16 +13,20 @@ namespace ZooLabApplication
         public List<Enclosure> Enclosures { get; private set; } = new List<Enclosure>();
         public List<IEmployees> Enployees { get; private set; } = new List<IEmployees>();
         public string Location { get; private set; }
+        public ZooConsole myConsole { get; set; }
+        public int NumberOfAnimal { get; private set; } = 0;
 
-        public Zoo(string location)
+        public Zoo(string location,ZooConsole console=null)
         {
             Location = location;
+            myConsole = console;
         }
 
         public Enclosure AddEnclosure(string name,int squreFeet)
         {
-            Enclosure enclosure = new Enclosure(name,squreFeet,this);
+            Enclosure enclosure = new Enclosure(name,squreFeet,this,myConsole);
             this.Enclosures.Add(enclosure);
+            myConsole?.WriteLine("Enclosure  with a name \""+name+ "\" added in zoo " + this.Location);
             return enclosure;
         }
 
@@ -30,25 +35,32 @@ namespace ZooLabApplication
             Enclosure enclosure = null;
             int itemNumber = 0;
 
-                foreach (Enclosure enclosureItem in this.Enclosures)
+            foreach (Enclosure enclosureItem in this.Enclosures)
+            {
+                itemNumber++;
+                try
                 {
-                    itemNumber++;
-                    try
-                    {
-                        enclosureItem.AddAnimals(animal);
-                    }
-                    catch (NotFriendlyAnimalException ex)
-                    {
-                        if (itemNumber < this.Enclosures.Count) continue;
-                        else throw new NoAvailableEclosureException(ex.Message);//"No enclosures with friendly animals!"
-                    }
-                    catch (NoAvailableSpaceException ex)
-                    {
-                        if (itemNumber < this.Enclosures.Count) continue;
-                        else throw new NoAvailableEclosureException(ex.Message);
-                    }
+                    NumberOfAnimal = NumberOfAnimal + 1;
+                    animal.Id = NumberOfAnimal;
+                    enclosureItem.AddAnimals(animal);
                     enclosure = enclosureItem;
+                    break;
+                        
                 }
+                catch (NotFriendlyAnimalException ex)
+                {
+                    NumberOfAnimal = NumberOfAnimal - 1;
+                    if (itemNumber < this.Enclosures.Count) continue;
+                    else throw new NoAvailableEclosureException(ex.Message);//"No enclosures with friendly animals!"
+                }
+                catch (NoAvailableSpaceException ex)
+                {
+                    NumberOfAnimal = NumberOfAnimal - 1;
+                    if (itemNumber < this.Enclosures.Count) continue;
+                    else throw new NoAvailableEclosureException("Not available enclosure,because "+ ex.Message);
+                }
+                    
+            }
 
             
             return enclosure;

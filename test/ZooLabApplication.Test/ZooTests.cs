@@ -53,7 +53,7 @@ namespace ZooLabApplication.Test
             //проверка когда вольеров несколько
             Enclosure enclosure2 = zoo.AddEnclosure("Enclosure for Elefant", 2000);
             Enclosure enclosureForElephant=zoo.FindAvailableEnclosure(new Elephant(45));
-            Assert.Equal(1, enclosureForElephant.Animals.Count);
+            Assert.Single( enclosureForElephant.Animals);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace ZooLabApplication.Test
 
             IEmployees zooKeeper2 = new ZooKeeper("firstName", "lastName");
             zooKeeper2.AddAnimalExperience(new Parrot(45));
-            Assert.Equal(1, zooKeeper2.AnimalExperiences.Count);
+            Assert.Single( zooKeeper2.AnimalExperiences);
 
             Enclosure enclosure2 = zoo.AddEnclosure("Enclosure for Elefant", 3000);
 
@@ -157,16 +157,16 @@ namespace ZooLabApplication.Test
         {
             Zoo zoo = new("Canada");
 
-           Assert.Equal(0, zoo.GetListOfAvaliableKeepers("Lion").Count);
+           Assert.Empty( zoo.GetListOfAvaliableKeepers("Lion"));
 
             Enclosure enclosure = zoo.AddEnclosure("Enclosure for Lion", 2000);
             zoo.FindAvailableEnclosure(new Lion(12));
             IEmployees zooKeeper = new ZooKeeper("firstName", "lastName");
-            Assert.Equal(0, zoo.GetListOfAvaliableKeepers("Lion").Count);
+            Assert.Empty(zoo.GetListOfAvaliableKeepers("Lion"));
 
             zooKeeper.AddAnimalExperience(new Lion(12));
             zoo.HireEmployee(zooKeeper);
-            Assert.Equal(1, zoo.GetListOfAvaliableKeepers("Lion").Count);
+            Assert.Single( zoo.GetListOfAvaliableKeepers("Lion"));
 
             Enclosure enclosure1 = zoo.AddEnclosure("Enclosure for Elephant", 3000);
             zoo.FindAvailableEnclosure(new Elephant(12));
@@ -179,7 +179,7 @@ namespace ZooLabApplication.Test
             IEmployees zooKeeper2 = new ZooKeeper("firstName2", "lastName2");
             zooKeeper2.AddAnimalExperience(new Elephant(12));
             zoo.HireEmployee(zooKeeper2);
-            Assert.Equal(1, zoo.GetListOfAvaliableKeepers("Elephant").Count);
+            Assert.Single(zoo.GetListOfAvaliableKeepers("Elephant"));
 
         }
         [Fact]
@@ -187,16 +187,16 @@ namespace ZooLabApplication.Test
         {
             Zoo zoo = new("Canada");
 
-            Assert.Equal(0, zoo.GetListOfAvaliableVeterinarian("Lion").Count);
+            Assert.Empty(zoo.GetListOfAvaliableVeterinarian("Lion"));
 
             Enclosure enclosure = zoo.AddEnclosure("Enclosure for Lion", 2000);
             zoo.FindAvailableEnclosure(new Lion(12));
             IEmployees zooKeeper = new Veterinarian("firstName", "lastName");
-            Assert.Equal(0, zoo.GetListOfAvaliableVeterinarian("Lion").Count);
+            Assert.Empty(zoo.GetListOfAvaliableVeterinarian("Lion"));
 
             zooKeeper.AddAnimalExperience(new Lion(12));
             zoo.HireEmployee(zooKeeper);
-            Assert.Equal(1, zoo.GetListOfAvaliableVeterinarian("Lion").Count);
+            Assert.Single( zoo.GetListOfAvaliableVeterinarian("Lion"));
 
             Enclosure enclosure1 = zoo.AddEnclosure("Enclosure for Elephant", 3000);
             zoo.FindAvailableEnclosure(new Elephant(12));
@@ -209,7 +209,7 @@ namespace ZooLabApplication.Test
             IEmployees zooKeeper2 = new Veterinarian("firstName2", "lastName2");
             zooKeeper2.AddAnimalExperience(new Elephant(12));
             zoo.HireEmployee(zooKeeper2);
-            Assert.Equal(1, zoo.GetListOfAvaliableVeterinarian("Elephant").Count);
+            Assert.Single(zoo.GetListOfAvaliableVeterinarian("Elephant"));
 
         }
     }
